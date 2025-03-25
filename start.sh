@@ -113,40 +113,49 @@ $vless
 EOF
 
     cat >$base_dir/xray/config.json <<EOF
-{
-  "log": {
-    "loglevel": "none"
-  },
-  "inbounds": [
-    {
-      "port": ${port},
-      "listen": "127.0.0.1",
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "${uuid}",
-            "level": 0,
-            "email": "wuqb2i4f@duck.com"
+
+  {
+    "log": {
+      "loglevel": "warning"
+    },
+    "inbounds": [
+      {
+        "listen": "0.0.0.0",
+        "port": 24726,
+        "protocol": "vless",
+        "settings": {
+          "clients": [
+            {
+              "id": "93867bc3-273b-4fd0-bbb1-2bed051ad215"
+            }
+          ],
+          "decryption": "none"
+        },
+        "streamSettings": {
+          "network": "splithttp",
+          "splithttpSettings": {
+            "path": "/split"
           }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "none",
-        "wsSettings": {
-          "path": "/ws?ed=2048"
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": [
+            "http",
+            "tls",
+            "quic"
+          ]
         }
       }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom"
-    }
-  ]
-}
+    ],
+    "outbounds": [
+      {
+        "protocol": "freedom",
+        "tag": "direct"
+      }
+    ]
+  }
+    
+  
 EOF
 
     cat >$base_dir/../public_html/fragment.json <<EOF
